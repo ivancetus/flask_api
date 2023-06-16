@@ -1,10 +1,9 @@
 Flask
 Flask-Cors
 numpy
-scikit-learn
-xgboost
-fake-useragent
-selenium
 pytube
 webdriver-manager
 httpie
+fake_useragent
+selenium
+gunicorn

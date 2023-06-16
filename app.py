@@ -1,17 +1,15 @@
 from youtube_download import get_yt
-from flask import Flask, request, send_file, make_response
+from flask import Flask, request, send_file
 from flask_cors import CORS
 import logging
 
 logging.basicConfig(filename='app.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# some useful module in flask: jsonify, redirect, url_for, render_template
-
 app = Flask(__name__)
-cors = CORS(app, expose_headers='Content-Disposition', resources={r'/yt/*': {'origins': '*'}})
+cors = CORS(app, expose_headers='Content-Disposition', resources={r'/': {'origins': '*'}})
 
 
-@app.route('/yt', methods=['POST'])
+@app.route('/', methods=['POST'])
 def yt():
     file_path = ""
     data = request.get_json()

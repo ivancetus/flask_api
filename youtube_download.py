@@ -144,11 +144,18 @@ def get_yt(youtube_url, file_format):
     return file_full_path
 
 
+"""
+debug pytube function
+"""
 # if __name__ == '__main__':
 #     try:
-#         get_yt('https://m.youtube.com/watch?v=mSUK', 'MP3')
+#         get_yt('https://youtu.be/9zM-dnqQ5ss', 'MP4')
 #     except RegexMatchError as e:
 #         print(e)
+#     except Exception as e:
+#         print(e)
+
+
 
 # attempt using subprocess to no avail
 # if __name__ == '__main__':
