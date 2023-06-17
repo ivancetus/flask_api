@@ -1,5 +1,5 @@
 from youtube_download import get_yt
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, render_template
 from flask_cors import CORS
 import logging
 
@@ -28,9 +28,9 @@ def yt():
     return response
 
 
-@app.route('/test')
-def test():
-    return "request made"
+@app.route('/', methods=['GET'])
+def info():
+    return render_template("index.html")
 
 
 if __name__ == '__main__':
