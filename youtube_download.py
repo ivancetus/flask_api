@@ -1,4 +1,6 @@
 import os.path
+import time
+
 from fake_useragent import UserAgent
 from pytube.exceptions import RegexMatchError
 from selenium import webdriver
@@ -10,6 +12,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 from pytube import YouTube
 import pathlib
+from numpy.random import default_rng
 
 
 def chrome_browser():
@@ -115,11 +118,11 @@ def download(title_href, file_format, output_path):
 def get_yt(youtube_url, file_format):
     try:
         yt = YouTube(youtube_url)
-    except RegexMatchError as e:
-        print(e)
+    except RegexMatchError:
         return
-    except Exception as e:
-        print(e)
+    except Exception:
+        return
+    if not yt:
         return
     file_format = file_format.rstrip().lower()
     output_path = os.path.join(pathlib.Path().resolve(), f"{file_format}/").replace("\\", "/")
@@ -127,6 +130,7 @@ def get_yt(youtube_url, file_format):
     file_name = yt.title.replace("\\", "").replace("/", "_").replace(":", "_").replace("*", "") \
         .replace("?", "").replace("\"", "").replace("<", "").replace(">", "").replace("|", "--").replace(' ', '-')
     file_w_extension = f'{file_name}.{file_format}'
+
     if file_format == 'mp3':
         yt.streams.filter() \
             .get_audio_only() \
@@ -141,19 +145,20 @@ def get_yt(youtube_url, file_format):
         print("something went wrong, not valid file format (MP3 or MP4)")
     file_full_path = os.path.join(output_path, file_w_extension)
     print(file_full_path)
+    time.sleep(default_rng().uniform(1, 4))
     return file_full_path
 
 
 """
 debug pytube function
 """
-# if __name__ == '__main__':
-#     try:
-#         get_yt('https://youtu.be/9zM-dnqQ5ss', 'MP4')
-#     except RegexMatchError as e:
-#         print(e)
-#     except Exception as e:
-#         print(e)
+if __name__ == '__main__':
+    try:
+        f = get_yt('https://www.youtube.com/watch?v=JB5BupBSU0', 'MP4')
+    except RegexMatchError as e:
+        print("Main. RegexMatchError:", e)
+    except Exception as e:
+        print(e)
 
 
 
