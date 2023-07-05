@@ -1,7 +1,7 @@
 from pytube.exceptions import RegexMatchError
 
 from youtube_download import get_yt
-from flask import Flask, request, send_file, render_template
+from flask import Flask, request, send_file, render_template, Response
 from flask_cors import CORS
 import logging
 
@@ -23,19 +23,19 @@ def yt():
         if file_path:
             return send_file(file_path, mimetype='audio/mpeg', as_attachment=True)
         else:
-            return "video not found, make sure url is correct", 400
+            return Response(response="video not found, make sure url is correct", status=400)
     except RegexMatchError as e:
         logging.error(f'RegexMatchError: {str(e)}')
         if str(e).startswith('get_throttling_function_name'):
-            return "something went wrong, server need to be updated, contact Ivan!", 503
+            return Response(response="something went wrong, server need to be updated, contact Ivan!", status=503)
         else:
-            return str(e) + " ,contact Ivan!", 500
+            return Response(response=str(e) + " ,contact Ivan!", status=500)
     except Exception as e:
         logging.error(f'Error occurred: {str(e)}')
         if str(e).startswith('HTTP Error 429: Too Many Requests'):
-            return "server ip blocked by YouTube, please try again later", 503
+            return Response(response="server ip blocked by YouTube, please try again later", status=503)
         else:
-            return "server unavailable, contact Ivan!", 500
+            return Response(response="server unavailable, contact Ivan!", status=500)
 
 
 @app.route('/', methods=['GET'])
