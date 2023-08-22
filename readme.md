@@ -14,6 +14,9 @@ to test api in (venv)
 `http post http://127.0.0.1:8888 url=https://www.youtube.com/watch?v=Hu3Q9t6H4yw format=MP3`
 
 adjustment made to pytube cipher.py due to changes from YouTube's end (2023-07-01)
+
+added Procfile for deployment in Railway  
+
 ```python
 # old
 def get_throttling_function_name(js: str) -> str:
